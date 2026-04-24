@@ -1,175 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>全球单餐餐标动态测算系统 (Verified Global Links v5)</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    input[type=range]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #4f46e5; cursor: pointer; }
-  </style>
+    <meta charset="UTF-8">
+    <title>正在跳转 — Catering Standard System</title>
+    <meta http-equiv="refresh" content="0; url=https://snack-standard.pages.dev/">
+    <link rel="canonical" href="https://snack-standard.pages.dev/">
+    <script>location.replace('https://snack-standard.pages.dev/');</script>
+    <style>
+        body { font-family: -apple-system, "PingFang SC", sans-serif;
+               display: flex; align-items: center; justify-content: center;
+               min-height: 100vh; margin: 0; background: #f0f4f8; color: #475569; }
+        a { color: #4a90e2; text-decoration: none; font-weight: 600; }
+    </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-800 p-4 md:p-8 font-sans">
-  <div class="max-w-6xl mx-auto space-y-6">
-    <header class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-      <div>
-        <h1 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <i data-lucide="calculator" class="text-indigo-600"></i> 全球单餐餐标动态测算系统
-        </h1>
-        <p class="text-sm text-slate-500 mt-1">数据源已更新：已替换 US/AU/JP 易风控链接，确保全球可直接溯源。</p>
-      </div>
-      <div id="country-tabs" class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-lg overflow-x-auto w-full md:w-auto"></div>
-    </header>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-1 space-y-6">
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-          <h2 class="text-lg font-semibold mb-4 flex items-center gap-2"><i data-lucide="shopping-cart" class="text-emerald-500 w-5 h-5"></i> 分量设定 (g)</h2>
-          <div class="space-y-4">
-            <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100/50">
-              <label class="text-sm font-semibold text-indigo-900 flex justify-between">总蛋白 (熟) <input type="number" id="w-proteinTotal" value="150" class="w-16 bg-white border border-indigo-200 rounded text-center" /></label>
-              <input type="range" id="ratio-std" min="0" max="100" value="80" class="w-full mt-2 accent-indigo-600" />
-              <div class="flex justify-between text-[10px] text-slate-400 mt-1"><span>标准: <span id="label-std-ratio">80</span>%</span><span>优质: <span id="label-prem-ratio">20</span>%</span></div>
-            </div>
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <div>蔬菜 (熟)<input type="number" id="w-veg" value="150" class="w-full mt-1 border p-1 rounded" /></div>
-              <div>主食 (熟)<input type="number" id="w-carbs" value="150" class="w-full mt-1 border p-1 rounded" /></div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-            <div class="flex justify-between items-center mb-2"><h2 class="text-lg font-semibold">水果附加项</h2><input type="checkbox" id="switch-fruit" checked class="w-4 h-4" /></div>
-            <input type="number" id="w-fruit" value="150" class="w-full border p-2 rounded text-sm" />
-        </div>
-      </div>
-
-      <div class="lg:col-span-2 space-y-6">
-        <div class="bg-indigo-900 rounded-2xl p-6 shadow-lg text-white flex justify-between">
-          <div>
-            <p class="text-indigo-200 text-sm"><span id="dash-country-name"></span> 测算成本</p>
-            <div class="mt-2"><span id="dash-symbol" class="text-3xl font-bold"></span><span id="dash-total" class="text-5xl font-extrabold mx-1">0.00</span><span id="dash-currency" class="text-indigo-200"></span></div>
-          </div>
-          <div id="dash-bars" class="hidden md:flex flex-col gap-2 w-1/3 justify-center"></div>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] tracking-wider">
-              <tr><th class="px-5 py-3">模块</th><th class="px-5 py-3 text-right">标价</th><th class="px-5 py-3 text-right">需生重</th><th class="px-5 py-3 text-right">成本</th><th class="px-5 py-3 text-center">溯源链接</th></tr>
-            </thead>
-            <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
-          </table>
-        </div>
-      </div>
+<body>
+    <div>
+        正在前往新版本…如果没有自动跳转，请点击
+        <a href="https://snack-standard.pages.dev/">这里</a>。
     </div>
-  </div>
-
-  <script>
-    const COUNTRIES = {
-      CN: { name: '中国', currency: 'CNY', symbol: '¥' },
-      JP: { name: '日本', currency: 'JPY', symbol: '¥' },
-      SG: { name: '新加坡', currency: 'SGD', symbol: 'S$' },
-      US: { name: '美国', currency: 'USD', symbol: '$' },
-      UK: { name: '英国', currency: 'GBP', symbol: '£' },
-      AU: { name: '澳大利亚', currency: 'AUD', symbol: 'A$' }
-    };
-
-    const RAW_DATA = {
-      CN: [
-        { id: 'proteinStd', cat: '标准蛋白', nameZh: '鸡胸/牛腱/猪肉', spec: 1500, price: 74.85, yieldType: 'meat', urls: [{name:'正大鸡胸', url:'https://item.jd.com/100000216120.html'}, {name:'恒都牛肉', url:'https://item.jd.com/100018141066.html'}, {name:'土猪瘦肉', url:'https://item.jd.com/100127193196.html'}] },
-        { id: 'proteinPrem', cat: '优质蛋白', nameZh: '西冷牛排/羊排', spec: 500, price: 94.8, yieldType: 'meat', urls: [{name:'农夫好牛', url:'https://item.jd.com/100006736619.html'}, {name:'盐池滩羊', url:'https://item.jd.com/5319837.html'}] },
-        { id: 'veg', cat: '蔬菜', nameZh: '新鲜圆白菜', spec: 500, price: 4.95, url: 'https://item.jd.com/100008332194.html', yieldType: 'veg' },
-        { id: 'carbs', cat: '主食', nameZh: '东北大米', spec: 5000, price: 30.0, url: 'https://item.jd.com/958912.html', yieldType: 'rice' },
-        { id: 'oil', cat: '油脂', nameZh: '欧丽薇兰橄榄油', spec: 500, price: 50.0, url: 'https://item.jd.com/302018.html', yieldType: 'none' },
-        { id: 'seasoning', cat: '调料', nameZh: '生抽/盐', spec: 1000, price: 7.9, yieldType: 'none', urls: [{name:'海天生抽', url:'https://item.jd.com/100011995276.html'}, {name:'中盐精制盐', url:'https://item.jd.com/100059702708.html'}] },
-        { id: 'fruit', cat: '水果', nameZh: '西瓜/苹果/香蕉', spec: 1500, price: 26.1, yieldType: 'fruit', urls: [{name:'麒麟西瓜', url:'https://item.jd.com/100033839552.html'}, {name:'阿克苏苹果', url:'https://item.jd.com/100075593883.html'}, {name:'进口香蕉', url:'https://item.jd.com/3713039.html'}] },
-      ],
-      US: [
-        { id: 'proteinStd', cat: '标准蛋白', nameZh: 'Chicken/Beef/Pork', spec: 1500, price: 21.50, yieldType: 'meat', urls: [{name:'Chicken Breast', url:'https://www.amazon.com/dp/B0797C2FKB'}, {name:'Ground Beef', url:'https://www.amazon.com/dp/B0797F9J3H'}, {name:'Pork Loin', url:'https://www.amazon.com/dp/B078B1WPR8'}] },
-        { id: 'proteinPrem', cat: '优质蛋白', nameZh: 'Steak/Lamb', spec: 500, price: 18.50, yieldType: 'meat', urls: [{name:'Ribeye Steak', url:'https://www.amazon.com/dp/B07RVRX2TC'}, {name:'Lamb Loin', url:'https://www.amazon.com/dp/B07S227ZSV'}] },
-        { id: 'veg', cat: '蔬菜', nameZh: 'Green Cabbage', spec: 1000, price: 1.80, url: 'https://www.amazon.com/dp/B000P6G3S2', yieldType: 'veg' },
-        { id: 'carbs', cat: '主食', nameZh: 'White Rice', spec: 2200, price: 3.50, url: 'https://www.amazon.com/dp/B004NRLAVY', yieldType: 'rice' },
-        { id: 'oil', cat: '油脂', nameZh: 'Olive Oil', spec: 500, price: 8.90, url: 'https://www.amazon.com/dp/B00374W96S', yieldType: 'none' },
-        { id: 'seasoning', cat: '调料', nameZh: 'Salt/Soy Sauce', spec: 1000, price: 5.50, yieldType: 'none', urls: [{name:'Table Salt', url:'https://www.amazon.com/dp/B000RLMZX6'}, {name:'Soy Sauce', url:'https://www.amazon.com/dp/B001WOS8CO'}] },
-        { id: 'fruit', cat: '水果', nameZh: 'Mixed Fruit', spec: 1500, price: 6.50, yieldType: 'fruit', urls: [{name:'Bananas', url:'https://www.amazon.com/dp/B000P6G3JC'}, {name:'Fuji Apples', url:'https://www.amazon.com/dp/B007H0N8W2'}] },
-      ],
-      JP: [
-        { id: 'proteinStd', cat: '标准蛋白', nameZh: '鶏/牛/豚', spec: 1500, price: 2980, yieldType: 'meat', urls: [{name:'鶏むね肉', url:'https://www.amazon.co.jp/dp/B00X92U5D2'}, {name:'豚ロース', url:'https://www.amazon.co.jp/dp/B07NDP98H6'}, {name:'牛切り落とし', url:'https://www.amazon.co.jp/dp/B08P1MBNF8'}] },
-        { id: 'proteinPrem', cat: '优质蛋白', nameZh: '和牛/ラム', spec: 500, price: 3800, yieldType: 'meat', urls: [{name:'黒毛和牛', url:'https://www.amazon.co.jp/dp/B077S6Z6G9'}, {name:'ラムチョップ', url:'https://www.amazon.co.jp/dp/B012ZBO48K'}] },
-        { id: 'veg', cat: '蔬菜', nameZh: 'キャベツ', spec: 1000, price: 280, url: 'https://www.amazon.co.jp/dp/B004705XLI', yieldType: 'veg' },
-        { id: 'carbs', cat: '主食', nameZh: 'コシヒカリ', spec: 5000, price: 3200, url: 'https://www.amazon.co.jp/dp/B004W9B89S', yieldType: 'rice' },
-        { id: 'oil', cat: '油脂', nameZh: 'オリーブオイル', spec: 500, price: 1400, url: 'https://www.amazon.co.jp/dp/B004VLD27W', yieldType: 'none' },
-        { id: 'seasoning', cat: '调料', nameZh: '醤油/塩', spec: 1000, price: 980, yieldType: 'none', urls: [{name:'醤油', url:'https://www.amazon.co.jp/dp/B003VWB6DU'}, {name:'塩', url:'https://www.amazon.co.jp/dp/B001OXNRYI'}] },
-        { id: 'fruit', cat: '水果', nameZh: 'バナナ/林檎', spec: 1500, price: 1800, yieldType: 'fruit', urls: [{name:'バナナ', url:'https://www.amazon.co.jp/dp/B005UKY3L2'}, {name:'りんご', url:'https://www.amazon.co.jp/dp/B0096L9W84'}] },
-      ],
-      SG: [
-        { id: 'proteinStd', cat: '标准蛋白', nameZh: 'Chicken/Pork/Beef', spec: 1500, price: 29.50, yieldType: 'meat', urls: [{name:'Chicken Breast', url:'https://www.fairprice.com.sg/product/pasar-fresh-chicken-breast-500g-103681'}, {name:'Frozen Pork', url:'https://www.fairprice.com.sg/product/13063529'}, {name:'Minced Beef', url:'https://www.fairprice.com.sg/product/13088015'}] },
-        { id: 'proteinPrem', cat: '优质蛋白', nameZh: 'Ribeye/Lamb', spec: 500, price: 35.00, yieldType: 'meat', urls: [{name:'Ribeye Steak', url:'https://www.fairprice.com.sg/product/10903823'}, {name:'Lamb Chops', url:'https://www.fairprice.com.sg/product/90082729'}] },
-        { id: 'veg', cat: '蔬菜', nameZh: 'Cabbage', spec: 1000, price: 3.50, url: 'https://www.fairprice.com.sg/product/10134005', yieldType: 'veg' },
-        { id: 'carbs', cat: '主食', nameZh: 'Thai Rice', spec: 5000, price: 14.20, url: 'https://www.fairprice.com.sg/product/13013897', yieldType: 'rice' },
-        { id: 'oil', cat: '油脂', nameZh: 'Olive Oil', spec: 500, price: 11.80, url: 'https://www.fairprice.com.sg/product/13083115', yieldType: 'none' },
-        { id: 'seasoning', cat: '调料', nameZh: 'Soy/Salt', spec: 1000, price: 4.80, yieldType: 'none', urls: [{name:'Soy Sauce', url:'https://www.fairprice.com.sg/product/105156'}, {name:'Fine Salt', url:'https://www.fairprice.com.sg/product/10156972'}] },
-        { id: 'fruit', cat: '水果', nameZh: 'Apple/Banana', spec: 1500, price: 9.50, yieldType: 'fruit', urls: [{name:'Apples', url:'https://www.fairprice.com.sg/product/90099496'}, {name:'Bananas', url:'https://www.fairprice.com.sg/product/102551'}] },
-      ],
-      AU: [
-        { id: 'proteinStd', cat: '标准蛋白', nameZh: 'Chicken/Beef/Pork', spec: 1500, price: 26.50, yieldType: 'meat', urls: [{name:'Chicken Fillet', url:'https://www.woolworths.com.au/shop/productdetails/2263168'}, {name:'Beef Mince', url:'https://www.woolworths.com.au/shop/productdetails/2121545'}, {name:'Pork Chops', url:'https://www.woolworths.com.au/shop/productdetails/2111166'}] },
-        { id: 'proteinPrem', cat: '优质蛋白', nameZh: 'Scotch Fillet/Lamb', spec: 500, price: 28.00, yieldType: 'meat', urls: [{name:'Scotch Fillet', url:'https://www.woolworths.com.au/shop/productdetails/4997220'}, {name:'Lamb Loin', url:'https://www.woolworths.com.au/shop/productdetails/3377227'}] },
-        { id: 'veg', cat: '蔬菜', nameZh: 'Cabbage', spec: 1000, price: 4.80, url: 'https://www.woolworths.com.au/shop/productdetails/367016', yieldType: 'veg' },
-        { id: 'carbs', cat: '主食', nameZh: 'SunRice White', spec: 1000, price: 1.80, url: 'https://www.woolworths.com.au/shop/productdetails/2603437', yieldType: 'rice' },
-        { id: 'oil', cat: '油脂', nameZh: 'Olive Oil', spec: 500, price: 10.00, url: 'https://www.woolworths.com.au/shop/productdetails/2114707', yieldType: 'none' },
-        { id: 'seasoning', cat: '调料', nameZh: 'Soy/Salt', spec: 1000, price: 6.20, yieldType: 'none', urls: [{name:'Soy Sauce', url:'https://www.woolworths.com.au/shop/productdetails/2579434'}, {name:'Table Salt', url:'https://www.woolworths.com.au/shop/productdetails/8766810'}] },
-        { id: 'fruit', cat: '水果', nameZh: 'Apple/Banana', spec: 1500, price: 8.50, yieldType: 'fruit', urls: [{name:'Apples', url:'https://www.woolworths.com.au/shop/productdetails/5111654'}, {name:'Bananas', url:'https://www.woolworths.com.au/shop/productdetails/409499'}] },
-      ],
-      UK: [
-        { id: 'proteinStd', cat: '标准蛋白', nameZh: 'Chicken/Beef/Pork', spec: 1500, price: 12.50, yieldType: 'meat', urls: [{name:'Chicken', url:'https://www.tesco.com/groceries/en-GB/products/292276941'}, {name:'Beef', url:'https://www.tesco.com/groceries/en-GB/products/261775791'}, {name:'Pork', url:'https://www.tesco.com/groceries/en-GB/products/252203118'}] },
-        { id: 'proteinPrem', cat: '优质蛋白', nameZh: 'Steak/Lamb', spec: 500, price: 11.00, yieldType: 'meat', urls: [{name:'Steak', url:'https://www.tesco.com/groceries/en-GB/products/250493206'}, {name:'Lamb', url:'https://www.tesco.com/groceries/en-GB/products/250485603'}] },
-        { id: 'veg', cat: '蔬菜', nameZh: 'Cabbage', spec: 1000, price: 0.85, url: 'https://www.tesco.com/groceries/en-GB/products/253557993', yieldType: 'veg' },
-        { id: 'carbs', cat: '主食', nameZh: 'Rice', spec: 5000, price: 5.20, url: 'https://www.tesco.com/groceries/en-GB/products/306915175', yieldType: 'rice' },
-        { id: 'oil', cat: '油脂', nameZh: 'Olive Oil', spec: 500, price: 6.00, url: 'https://www.tesco.com/groceries/en-GB/products/254916301', yieldType: 'none' },
-        { id: 'seasoning', cat: '调料', nameZh: 'Salt/Soy', spec: 1000, price: 3.80, yieldType: 'none', urls: [{name:'Salt', url:'https://www.tesco.com/groceries/en-GB/products/254907144'}, {name:'Soy', url:'https://www.tesco.com/groceries/en-GB/products/252818579'}] },
-        { id: 'fruit', cat: '水果', nameZh: 'Apples/Bananas', spec: 1500, price: 3.50, yieldType: 'fruit', urls: [{name:'Apples', url:'https://www.tesco.com/groceries/en-GB/products/293282494'}, {name:'Bananas', url:'https://www.tesco.com/groceries/en-GB/products/275356220'}] },
-      ]
-    };
-
-    let state = { country: 'CN', weights: { proteinTotal: 150, veg: 150, carbs: 150, oil: 10, seasoning: 12, fruit: 150 }, stdRatio: 80, hasFruit: true, yields: { meat: 0.75, veg: 0.85, rice: 2.5, fruit: 0.80 } };
-
-    function calculate() {
-      const data = RAW_DATA[state.country];
-      const results = data.filter(item => state.hasFruit || item.id !== 'fruit').map(item => {
-        let targetW = (item.id === 'proteinStd') ? state.weights.proteinTotal * (state.stdRatio/100) : (item.id === 'proteinPrem' ? state.weights.proteinTotal * (1-state.stdRatio/100) : state.weights[item.id] || 0);
-        const yf = item.yieldType === 'none' ? 1 : (state.yields[item.yieldType] || 1);
-        const rawNeeded = targetW / yf;
-        return { ...item, targetW, rawNeeded, cost: rawNeeded * (item.price / item.spec) };
-      });
-      return { results, totalCost: results.reduce((a, b) => a + b.cost, 0) };
-    }
-
-    function render() {
-      const { results, totalCost } = calculate();
-      const config = COUNTRIES[state.country];
-      document.getElementById('country-tabs').innerHTML = Object.keys(COUNTRIES).map(code => `<button onclick="setCountry('${code}')" class="px-3 py-1.5 rounded-md text-xs font-medium ${state.country === code ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500'}">${COUNTRIES[code].name}</button>`).join('');
-      document.getElementById('dash-country-name').textContent = config.name;
-      document.getElementById('dash-symbol').textContent = config.symbol;
-      document.getElementById('dash-total').textContent = totalCost.toFixed(2);
-      document.getElementById('dash-currency').textContent = config.currency;
-      document.getElementById('label-std-ratio').textContent = state.stdRatio;
-      document.getElementById('label-prem-ratio').textContent = 100 - state.stdRatio;
-      document.getElementById('table-body').innerHTML = results.map(item => `
-        <tr class="hover:bg-slate-50">
-          <td class="px-5 py-4"><div class="font-medium">${item.cat}</div><div class="text-[10px] text-slate-400">${item.nameZh}</div></td>
-          <td class="px-5 py-4 text-right">${config.symbol}${item.price.toFixed(2)}<br><span class="text-[10px] text-slate-400">/${item.spec}g</span></td>
-          <td class="px-5 py-4 text-right">${item.rawNeeded.toFixed(1)}g</td>
-          <td class="px-5 py-4 text-right font-bold text-indigo-600">${config.symbol}${item.cost.toFixed(2)}</td>
-          <td class="px-5 py-4 text-center">${item.urls ? item.urls.map(u => `<a href="${u.url}" target="_blank" class="block text-[10px] text-indigo-500 hover:underline mb-1">${u.name}</a>`).join('') : `<a href="${item.url}" target="_blank" class="text-indigo-500 underline text-[10px]">查看商品</a>`}</td>
-        </tr>`).join('');
-    }
-
-    function setCountry(c) { state.country = c; render(); }
-    document.getElementById('w-proteinTotal').oninput = (e) => { state.weights.proteinTotal = +e.target.value; render(); };
-    document.getElementById('ratio-std').oninput = (e) => { state.stdRatio = +e.target.value; render(); };
-    document.getElementById('switch-fruit').onchange = (e) => { state.hasFruit = e.target.checked; render(); };
-    window.onload = () => { lucide.createIcons(); render(); };
-  </script>
 </body>
 </html>
